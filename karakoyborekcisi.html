@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Karaköy Börekçisi | Manisa Şehzadeler</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --gold: #F5C300;
+    --gold-dark: #D4A800;
+    --gold-light: #FFD740;
+    --black: #0A0A0A;
+    --charcoal: #1A1A1A;
+    --white: #FFFFFF;
+    --card-bg: #161616;
+  }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Inter', sans-serif; background: var(--black); color: var(--white); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 60px; height: 70px;
+    background: rgba(10,10,10,0.96); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,195,0,0.15);
+  }
+  .nav-logo { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:900; color:var(--gold); text-decoration:none; }
+  .nav-logo span { color:var(--white); }
+  .nav-links { display:flex; gap:36px; list-style:none; }
+  .nav-links a { color:rgba(255,255,255,0.75); text-decoration:none; font-size:0.88rem; font-weight:500; letter-spacing:0.08em; text-transform:uppercase; transition:color 0.2s; }
+  .nav-links a:hover { color:var(--gold); }
+  .nav-cta { background:var(--gold); color:var(--black)!important; padding:10px 22px; border-radius:4px; font-weight:700!important; }
+  .nav-cta:hover { background:var(--gold-light)!important; }
+
+  /* HERO */
+  .hero {
+    min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding:100px 40px 60px; position:relative; overflow:hidden; background:var(--black);
+  }
+  .hero::before {
+    content:''; position:absolute; top:-200px; left:50%; transform:translateX(-50%);
+    width:900px; height:900px;
+    background:radial-gradient(ellipse, rgba(245,195,0,0.12) 0%, transparent 70%);
+    pointer-events:none;
+  }
+  .hero-eyebrow {
+    display:inline-flex; align-items:center; gap:10px;
+    background:rgba(245,195,0,0.1); border:1px solid rgba(245,195,0,0.3);
+    border-radius:50px; padding:8px 20px; font-size:0.78rem; font-weight:600;
+    letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:32px;
+  }
+  .hero-eyebrow::before { content:'✦'; font-size:0.7rem; }
+  .hero h1 { font-family:'Playfair Display',serif; font-size:clamp(3.5rem,9vw,7.5rem); font-weight:900; line-height:0.95; letter-spacing:-0.02em; margin-bottom:24px; }
+  .hero h1 .highlight { color:var(--gold); display:block; }
+  .hero-sub { font-size:1.05rem; color:rgba(255,255,255,0.55); max-width:480px; line-height:1.7; margin-bottom:48px; font-weight:300; }
+  .hero-actions { display:flex; gap:16px; flex-wrap:wrap; justify-content:center; }
+  .btn-primary { display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--black); text-decoration:none; padding:16px 34px; border-radius:6px; font-weight:700; font-size:0.95rem; transition:all 0.2s; }
+  .btn-primary:hover { background:var(--gold-light); transform:translateY(-2px); box-shadow:0 12px 40px rgba(245,195,0,0.35); }
+  .btn-secondary { display:inline-flex; align-items:center; gap:8px; border:1.5px solid rgba(255,255,255,0.25); color:var(--white); text-decoration:none; padding:16px 34px; border-radius:6px; font-weight:500; font-size:0.95rem; transition:all 0.2s; }
+  .btn-secondary:hover { border-color:var(--gold); color:var(--gold); transform:translateY(-2px); }
+  .hero-scroll { position:absolute; bottom:36px; left:50%; transform:translateX(-50%); display:flex; flex-direction:column; align-items:center; gap:8px; color:rgba(255,255,255,0.3); font-size:0.72rem; letter-spacing:0.15em; text-transform:uppercase; animation:bounce 2s infinite; }
+  .hero-scroll::after { content:''; width:1px; height:40px; background:linear-gradient(to bottom, rgba(245,195,0,0.5), transparent); }
+  @keyframes bounce { 0%,100%{transform:translateX(-50%) translateY(0)} 50%{transform:translateX(-50%) translateY(6px)} }
+
+  /* SECTIONS */
+  .section-label { display:inline-flex; align-items:center; gap:10px; color:var(--gold); font-size:0.75rem; font-weight:700; letter-spacing:0.2em; text-transform:uppercase; margin-bottom:16px; }
+  .section-label::before { content:''; width:28px; height:1.5px; background:var(--gold); }
+  .section-title { font-family:'Playfair Display',serif; font-size:clamp(2rem,4vw,3.2rem); font-weight:700; line-height:1.1; margin-bottom:16px; }
+
+  /* MENU */
+  #menu { background:var(--charcoal); padding:100px 60px; position:relative; overflow:hidden; }
+  #menu::before { content:'MENÜ'; position:absolute; right:-20px; top:50%; transform:translateY(-50%); font-family:'Playfair Display',serif; font-size:14rem; font-weight:900; color:rgba(245,195,0,0.03); pointer-events:none; white-space:nowrap; }
+  .menu-header { text-align:center; margin-bottom:56px; }
+
+  /* MENU TABS */
+  .menu-tabs { display:flex; justify-content:center; gap:12px; flex-wrap:wrap; margin-bottom:48px; }
+  .menu-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); color:rgba(255,255,255,0.6); padding:10px 24px; border-radius:40px; font-size:0.85rem; font-weight:600; cursor:pointer; transition:all 0.2s; letter-spacing:0.04em; }
+  .menu-tab:hover { border-color:rgba(245,195,0,0.4); color:var(--gold); }
+  .menu-tab.active { background:var(--gold); border-color:var(--gold); color:var(--black); }
+
+  /* MENU CATEGORY */
+  .menu-category { display:none; }
+  .menu-category.active { display:block; }
+
+  /* TANE & KALEM — liste stili (iki kolon) */
+  .menu-list-grid {
+    display:grid;
+    grid-template-columns:repeat(auto-fill, minmax(340px,1fr));
+    gap:12px;
+    max-width:1100px;
+    margin:0 auto;
+  }
+  .menu-list-item {
+    display:flex; align-items:center; justify-content:space-between;
+    background:var(--card-bg); border:1px solid rgba(255,255,255,0.06);
+    border-radius:10px; padding:16px 22px; transition:all 0.2s;
+  }
+  .menu-list-item:hover { border-color:rgba(245,195,0,0.35); }
+  .menu-list-left { display:flex; flex-direction:column; gap:4px; }
+  .menu-list-name { font-size:0.97rem; font-weight:600; color:var(--white); }
+  .menu-list-desc { font-size:0.8rem; color:rgba(255,255,255,0.4); }
+  .menu-list-price { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:700; color:var(--gold); white-space:nowrap; margin-left:16px; }
+
+  /* GÖZLEME — kart stili */
+  .menu-gozleme { max-width:700px; margin:0 auto; }
+  .gozleme-card { background:var(--card-bg); border:1px solid rgba(245,195,0,0.2); border-radius:16px; padding:36px; display:flex; align-items:center; gap:40px; }
+  .gozleme-img { font-size:5rem; }
+  .gozleme-content { flex:1; }
+  .gozleme-title { font-family:'Playfair Display',serif; font-size:1.6rem; font-weight:700; color:var(--white); margin-bottom:12px; }
+  .gozleme-list { list-style:none; display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
+  .gozleme-list li { display:flex; align-items:center; gap:8px; font-size:0.92rem; color:rgba(255,255,255,0.7); }
+  .gozleme-list li::before { content:'✦'; color:var(--gold); font-size:0.6rem; }
+  .gozleme-price-badge { display:inline-flex; align-items:baseline; gap:4px; background:var(--gold); color:var(--black); padding:10px 20px; border-radius:8px; }
+  .gozleme-price-badge .price { font-family:'Playfair Display',serif; font-size:2rem; font-weight:900; }
+  .gozleme-price-badge .unit { font-size:0.8rem; font-weight:700; opacity:0.7; }
+
+  /* KOL & İÇECEK */
+  .menu-kol { max-width:800px; margin:0 auto; }
+  .kol-card { background:var(--card-bg); border:1px solid rgba(255,255,255,0.06); border-radius:10px; padding:20px 24px; display:flex; align-items:center; justify-content:space-between; gap:16px; }
+  .kol-name { font-size:1rem; font-weight:600; }
+  .kol-desc { font-size:0.8rem; color:rgba(255,255,255,0.4); margin-top:4px; }
+  .kol-price { font-family:'Playfair Display',serif; font-size:1.3rem; font-weight:700; color:var(--gold); white-space:nowrap; }
+
+  /* İÇECEKLER */
+  .menu-drink-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(200px,1fr)); gap:10px; max-width:900px; margin:0 auto; }
+  .drink-item { background:var(--card-bg); border:1px solid rgba(255,255,255,0.06); border-radius:8px; padding:14px 18px; display:flex; justify-content:space-between; align-items:center; font-size:0.88rem; }
+  .drink-name { color:rgba(255,255,255,0.75); }
+  .drink-price { color:var(--gold); font-weight:700; font-size:0.95rem; }
+
+  /* PHOTO SECTION */
+  .photo-row {
+    display:flex; gap:16px; overflow-x:auto; padding:0 60px 48px;
+    max-width:1400px; margin:0 auto; scrollbar-width:none;
+  }
+  .photo-row::-webkit-scrollbar { display:none; }
+  .photo-item { flex:0 0 280px; border-radius:12px; overflow:hidden; position:relative; }
+  .photo-item img { width:100%; height:200px; object-fit:cover; display:block; }
+  .photo-label { position:absolute; bottom:0; left:0; right:0; padding:12px 16px; background:linear-gradient(to top, rgba(0,0,0,0.85), transparent); font-size:0.85rem; font-weight:600; color:var(--white); }
+
+  /* ORDER BANNER */
+  .order-banner { background:var(--gold); padding:60px; text-align:center; position:relative; overflow:hidden; }
+  .order-banner::before { content:'🥐'; position:absolute; left:5%; top:50%; transform:translateY(-50%); font-size:7rem; opacity:0.15; }
+  .order-banner::after { content:'🥐'; position:absolute; right:5%; top:50%; transform:translateY(-50%); font-size:7rem; opacity:0.15; }
+  .order-banner h2 { font-family:'Playfair Display',serif; font-size:clamp(1.8rem,3.5vw,2.8rem); font-weight:900; color:var(--black); margin-bottom:12px; }
+  .order-banner p { color:rgba(0,0,0,0.6); margin-bottom:28px; font-size:1rem; }
+  .btn-dark { display:inline-flex; align-items:center; gap:10px; background:var(--black); color:var(--gold); text-decoration:none; padding:16px 36px; border-radius:6px; font-weight:700; font-size:1rem; transition:all 0.2s; }
+  .btn-dark:hover { background:#1a1a1a; transform:translateY(-2px); box-shadow:0 12px 40px rgba(0,0,0,0.4); }
+
+  /* HAKKIMIZDA */
+  .about-wrap { background:var(--black); }
+  #hakkimizda { display:flex; align-items:center; gap:80px; max-width:1200px; margin:0 auto; padding:100px 60px; }
+  .about-visual { flex:0 0 380px; position:relative; }
+  .about-card { background:var(--card-bg); border:1px solid rgba(245,195,0,0.2); border-radius:16px; padding:40px; position:relative; }
+  .about-card::before { content:''; position:absolute; inset:-1px; border-radius:16px; background:linear-gradient(135deg, rgba(245,195,0,0.3), transparent 50%); z-index:-1; }
+  .about-card-quote { font-family:'Playfair Display',serif; font-size:5rem; color:var(--gold); line-height:1; margin-bottom:-10px; opacity:0.6; }
+  .about-card-text { font-size:1.2rem; font-style:italic; line-height:1.6; color:rgba(255,255,255,0.85); font-family:'Playfair Display',serif; }
+  .about-badge { position:absolute; bottom:-20px; right:-20px; background:var(--gold); color:var(--black); font-weight:800; font-size:0.75rem; text-align:center; border-radius:50%; width:90px; height:90px; display:flex; flex-direction:column; align-items:center; justify-content:center; line-height:1.3; }
+  .about-content { flex:1; }
+  .about-content p { color:rgba(255,255,255,0.7); font-size:1rem; line-height:1.85; margin-bottom:20px; }
+  .about-chips { display:flex; flex-wrap:wrap; gap:10px; margin-top:32px; }
+  .chip { display:inline-flex; align-items:center; gap:6px; border:1px solid rgba(245,195,0,0.3); color:var(--gold); padding:8px 16px; border-radius:40px; font-size:0.82rem; font-weight:500; background:rgba(245,195,0,0.06); }
+
+  /* İLETİŞİM */
+  #iletisim { background:var(--charcoal); padding:100px 60px; }
+  .contact-header { text-align:center; margin-bottom:64px; }
+  .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:40px; max-width:1100px; margin:0 auto; }
+  .contact-info { display:flex; flex-direction:column; gap:16px; }
+  .contact-item { display:flex; align-items:flex-start; gap:18px; background:var(--card-bg); border:1px solid rgba(255,255,255,0.06); border-radius:12px; padding:22px 24px; transition:border-color 0.2s; text-decoration:none; color:inherit; }
+  .contact-item:hover { border-color:rgba(245,195,0,0.4); }
+  .contact-icon { width:44px; height:44px; background:rgba(245,195,0,0.12); border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:1.2rem; flex-shrink:0; }
+  .contact-item-label { font-size:0.72rem; font-weight:700; letter-spacing:0.12em; text-transform:uppercase; color:var(--gold); margin-bottom:4px; }
+  .contact-item-value { font-size:0.97rem; color:rgba(255,255,255,0.85); font-weight:500; }
+
+  /* MAP — API'siz çalışan embed */
+  .map-container { border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,0.08); min-height:380px; }
+  .map-container iframe { width:100%; height:380px; border:none; display:block; }
+
+  /* FOOTER */
+  footer { background:var(--black); border-top:1px solid rgba(255,255,255,0.06); padding:40px 60px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:20px; }
+  .footer-logo { font-family:'Playfair Display',serif; font-size:1.2rem; font-weight:900; color:var(--gold); }
+  .footer-logo span { color:var(--white); }
+  .footer-copy { color:rgba(255,255,255,0.3); font-size:0.82rem; }
+  .footer-links { display:flex; gap:24px; list-style:none; }
+  .footer-links a { color:rgba(255,255,255,0.4); text-decoration:none; font-size:0.82rem; transition:color 0.2s; }
+  .footer-links a:hover { color:var(--gold); }
+
+  @media (max-width:900px) {
+    nav { padding:0 24px; }
+    .nav-links { display:none; }
+    #menu { padding:80px 24px; }
+    .photo-row { padding:0 24px 36px; }
+    #hakkimizda { flex-direction:column; gap:48px; padding:80px 24px; }
+    .about-visual { flex:none; width:100%; }
+    .contact-grid { grid-template-columns:1fr; }
+    #iletisim { padding:80px 24px; }
+    .order-banner { padding:60px 24px; }
+    footer { padding:36px 24px; flex-direction:column; align-items:flex-start; }
+    .gozleme-card { flex-direction:column; text-align:center; gap:20px; }
+    .menu-list-grid { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">KARAKÖY <span>BÖREKÇİSİ</span></a>
+  <ul class="nav-links">
+    <li><a href="#menu">Menü</a></li>
+    <li><a href="#hakkimizda">Hakkımızda</a></li>
+    <li><a href="#siparis">Sipariş Ver</a></li>
+    <li><a href="#iletisim">İletişim</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-eyebrow">Manisa Şehzadeler · Karaköy</div>
+  <h1>
+    Geleneksel Lezzet,<br>
+    <span class="highlight">Çıtır Keyif.</span>
+  </h1>
+  <p class="hero-sub">Her gün taze hazırlanan, çıtır hamurlu, bol iç harçlı börekler — tam istediğin gibi.</p>
+  <div class="hero-actions">
+    <a href="#menu" class="btn-primary">🥐 Menüyü Gör</a>
+    <a href="https://www.yemeksepeti.com/restaurant/ogc9/karakoy-borekcisi-ogc9" target="_blank" class="btn-secondary">Sipariş Ver →</a>
+  </div>
+  <div class="hero-scroll">Aşağı Kaydır</div>
+</section>
+
+<!-- FOTOĞRAF SATIRI (menüdeki görseller) -->
+<div style="background:var(--charcoal); padding-top:60px;">
+  <div class="photo-row">
+    <div class="photo-item">
+      <img src="taness.jpeg" alt="Tane Börek" loading="lazy">
+      <div class="photo-label">Tane Börekler</div>
+    </div>
+    <div class="photo-item">
+      <img src="kalelms.jpeg" alt="Kalem Börek" loading="lazy">
+      <div class="photo-label">Kalem Börekler</div>
+    </div>
+    <div class="photo-item">
+      <img src="gözlemes.jpeg" alt="Gözleme" loading="lazy">
+      <div class="photo-label">Gözleme</div>
+    </div>
+    <div class="photo-item">
+      <img src="kols.jpeg" alt="Kol Böreği" loading="lazy">
+      <div class="photo-label">Kol Böreği</div>
+    </div>
+  </div>
+</div>
+
+<!-- MENU -->
+<section id="menu">
+  <div class="menu-header">
+    <div class="section-label">Lezzetlerimiz</div>
+    <h2 class="section-title">Menümüz</h2>
+    <p style="color:rgba(255,255,255,0.4); font-size:0.9rem; margin-top:8px;">Her gün taze — Doğal malzeme, kaliteli lezzet</p>
+  </div>
+
+  <!-- TABS -->
+  <div class="menu-tabs">
+    <button class="menu-tab active" onclick="switchTab('tane')"> Tane Börekler</button>
+    <button class="menu-tab" onclick="switchTab('kalem')">Kalem Börekler</button>
+    <button class="menu-tab" onclick="switchTab('gozleme')"> Gözleme</button>
+    <button class="menu-tab" onclick="switchTab('kol')"> Kilo ile Börek</button>
+    <button class="menu-tab" onclick="switchTab('icecek')"> İçecekler</button>
+  </div>
+
+  <!-- TANE BÖREKLER -->
+  <div class="menu-category active" id="tab-tane">
+    <div class="menu-list-grid">
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Ispanak & Peynirli Gül Böreği</div>
+          <div class="menu-list-desc">Taze ıspanak, beyaz peynir — gül gibi kıvrılmış</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Patatesli Gül Böreği</div>
+          <div class="menu-list-desc">Baharatlı patates iç harcıyla</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Peynirli Gül Böreği</div>
+          <div class="menu-list-desc">Sade beyaz peynirli klasik gül</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Ispanak & Peynirli Arnavut Böreği</div>
+          <div class="menu-list-desc">Dilim — tepsi usulü, katkat hamur</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Patlıcanlı Arnavut Böreği</div>
+          <div class="menu-list-desc">Dilim — közlenmiş patlıcanlı özel harç</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Pırasalı Ispanaklı Peynirli Arnavut Böreği</div>
+          <div class="menu-list-desc">Dilim — pırasa, ıspanak ve peynir üçlüsü</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Kaşarlı Su Böreği</div>
+          <div class="menu-list-desc">Dilim — eriyen kaşar peyniriyle su böreği</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KALEM BÖREKLER -->
+  <div class="menu-category" id="tab-kalem">
+    <div class="menu-list-grid">
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Peynirli Kalem Böreği</div>
+          <div class="menu-list-desc">Beyaz peynir dolgusuyla çıtır çıtır</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Ispanaklı Peynirli Kalem Böreği</div>
+          <div class="menu-list-desc">Ispanak ve peynir — klasik ikili</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Patatesli Kalem Böreği</div>
+          <div class="menu-list-desc">Baharatlı patates iç harçlı</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Pizza Kalem Börek</div>
+          <div class="menu-list-desc">Domates sosu, kaşar, özel malzeme</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+      <div class="menu-list-item">
+        <div class="menu-list-left">
+          <div class="menu-list-name">Patlıcanlı Kalem Böreği</div>
+          <div class="menu-list-desc">Közlenmiş patlıcan dolgulu</div>
+        </div>
+        <div class="menu-list-price"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GÖZLEME -->
+  <div class="menu-category" id="tab-gozleme">
+    <div class="menu-gozleme">
+      <div class="gozleme-card">
+        <div class="gozleme-img"></div>
+        <div class="gozleme-content">
+          <div class="gozleme-title">Gözleme Çeşitleri</div>
+          <ul class="gozleme-list">
+            <li>Ispanak &amp; Peynirli</li>
+            <li>Peynirli</li>
+            <li>Patatesli</li>
+            <li>Kaşarlı</li>
+          </ul>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KOL & KİLO -->
+  <div class="menu-category" id="tab-kol">
+    <div class="menu-kol" style="display:flex; flex-direction:column; gap:12px;">
+      <div class="kol-card">
+        <div>
+          <div class="kol-name">Ispanak &amp; Peynirli Kol Böreği</div>
+          <div class="kol-desc">Kilogram ile satış — özel günler ve etkinlikler için tepsi siparişi alınır</div>
+        </div>
+        <div class="kol-price"></div>
+      </div>
+      <p style="color:rgba(255,255,255,0.3); font-size:0.82rem; text-align:center; margin-top:16px;">
+        📞 Toplu sipariş için bizi arayın: <strong style="color:var(--gold)">0530 288 78 15</strong>
+      </p>
+    </div>
+  </div>
+
+  <!-- İÇECEKLER -->
+  <div class="menu-category" id="tab-icecek">
+    <div class="menu-drink-grid">
+      <div class="drink-item"><span class="drink-name">Ayran</span><span class="drink-price"></span></div>
+      <div class="drink-item"><span class="drink-name">Maden Suyu</span><span class="drink-price"></span></div>
+      <div class="drink-item"><span class="drink-name">Meyveli Maden Suyu</span><span class="drink-price"></span></div>
+      <div class="drink-item"><span class="drink-name">Kola</span><span class="drink-price"></span></div>
+      <div class="drink-item"><span class="drink-name">Fanta</span><span class="drink-price"></span></div>
+      <div class="drink-item"><span class="drink-name">Su</span><span class="drink-price"></span></div>
+      <div class="drink-item"><span class="drink-name">Meyve Suyu</span><span class="drink-price"></span></div>
+      <div class="drink-item"><span class="drink-name">Limonata</span><span class="drink-price"></span></div>
+      <div class="drink-item"><span class="drink-name">☕ Çay</span><span class="drink-price"></span></div>
+    </div>
+  </div>
+
+  <p style="text-align:center; color:rgba(255,255,255,0.25); font-size:0.78rem; margin-top:40px;">
+   
+  </p>
+</section>
+
+<!-- SİPARİŞ VER -->
+<div id="siparis" class="order-banner">
+  <h2>Kapında Taze Börek!</h2>
+  <p>Yemeksepeti üzerinden hızlıca sipariş ver, sıcak böreklerimiz kapına gelsin.</p>
+  <a href="https://www.yemeksepeti.com/restaurant/ogc9/karakoy-borekcisi-ogc9" target="_blank" class="btn-dark">
+    🛵 &nbsp;Yemeksepeti'nde Sipariş Ver
+  </a>
+</div>
+
+<!-- HAKKIMIZDA -->
+<div class="about-wrap">
+  <div id="hakkimizda">
+    <div class="about-visual">
+      <div class="about-card">
+        <div class="about-card-quote">"</div>
+        <div class="about-card-text">Her lokmada gerçek börek tadı.</div>
+        <div class="about-badge">
+          <div style="font-size:1.3rem">🥐</div>
+          <div>Taze &amp;<br>Çıtır</div>
+        </div>
+      </div>
+    </div>
+    <div class="about-content">
+      <div class="section-label">Biz Kimiz</div>
+      <h2 class="section-title">Biz Karaköy<br>Börekçisi'yiz!</h2>
+      <p>Böreği gerçekten sevenlerin uğrayıp <strong style="color:var(--gold)">"tam istediğim gibi"</strong> dediği bir lezzet noktası olmaya çalışıyoruz.</p>
+      <p>Karaköy ve Aynı Ali şubelerimizde her gün taze taze hazırlanan böreklerimizi sıcak servis ediyoruz. Menümüzde gül böreği, kalem böreği, kol böreği ve Arnavut böreği gibi en sevilen çeşitler var.</p>
+      <p>Çıtır hamur, bol iç harç ve her lokmada gerçek börek tadı… Kısacası biz işimizi severek yapıyoruz, sizleri de her zaman bekliyoruz. ❤️</p>
+      <div class="about-chips">
+        <span class="chip">✦ Her Gün Taze</span>
+        <span class="chip">✦ Sıcak Servis</span>
+        <span class="chip">✦ Doğal Malzeme</span>
+        <span class="chip">✦ Bol İç Harç</span>
+        <span class="chip">✦ 2 Şube</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- İLETİŞİM -->
+<section id="iletisim">
+  <div class="contact-header">
+    <div class="section-label">Bize Ulaşın</div>
+    <h2 class="section-title">İletişim</h2>
+    <p style="color:rgba(255,255,255,0.45); margin-top:8px;">Sorularınız ve siparişleriniz için her zaman buradayız.</p>
+  </div>
+
+  <div class="contact-grid">
+    <div class="contact-info">
+      <a href="tel:+905302887815" class="contact-item">
+        <div class="contact-icon">📞</div>
+        <div>
+          <div class="contact-item-label">Telefon</div>
+          <div class="contact-item-value">0530 288 78 15</div>
+        </div>
+      </a>
+      
+      <a href="https://maps.app.goo.gl/4BfLrE8dHUNxp21P6" target="_blank" class="contact-item">
+        <div class="contact-icon">📍</div>
+        <div>
+          <div class="contact-item-label">Adres</div>
+          <div class="contact-item-value">Karaköy, Şehzadeler, Manisa</div>
+        </div>
+      </a>
+      <a href="https://www.yemeksepeti.com/restaurant/ogc9/karakoy-borekcisi-ogc9" target="_blank" class="contact-item">
+        <div class="contact-icon">🛵</div>
+        <div>
+          <div class="contact-item-label">Online Sipariş</div>
+          <div class="contact-item-value">Yemeksepeti'nde biz varız →</div>
+        </div>
+      </a>
+      <a href="https://maps.app.goo.gl/4BfLrE8dHUNxp21P6" target="_blank"
+         style="display:inline-flex; align-items:center; gap:8px; background:var(--gold); color:var(--black); text-decoration:none; padding:14px 24px; border-radius:8px; font-weight:700; font-size:0.9rem; margin-top:4px; transition:all 0.2s;"
+         onmouseover="this.style.background='#FFD740'" onmouseout="this.style.background='#F5C300'">
+        🗺️ &nbsp;Google Maps'te Yol Tarifi Al
+      </a>
+    </div>
+
+    <!-- API KEY gerektirmeyen OpenStreetMap embed -->
+    <div class="map-container">
+      <iframe
+        src="https://www.openstreetmap.org/export/embed.html?bbox=27.7939%2C38.6086%2C27.8139%2C38.6186&layer=mapnik&marker=38.6136%2C27.8039"
+        allowfullscreen
+        loading="lazy"
+        title="Karaköy Börekçisi Konumu">
+      </iframe>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">KARAKÖY <span>BÖREKÇİSİ</span></div>
+  <p class="footer-copy">© 2025 Karaköy Börekçisi — Manisa Şehzadeler</p>
+  <ul class="footer-links">
+    <li><a href="#menu">Menü</a></li>
+    <li><a href="#hakkimizda">Hakkımızda</a></li>
+    <li><a href="#iletisim">İletişim</a></li>
+  </ul>
+</footer>
+
+<script>
+  function switchTab(tab) {
+    document.querySelectorAll('.menu-tab').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.menu-category').forEach(c => c.classList.remove('active'));
+    event.target.classList.add('active');
+    document.getElementById('tab-' + tab).classList.add('active');
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if(e.isIntersecting) {
+        e.target.style.opacity = '1';
+        e.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.08 });
+
+  document.querySelectorAll('.menu-list-item, .contact-item, .drink-item, .kol-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(16px)';
+    el.style.transition = 'opacity 0.45s ease, transform 0.45s ease, border-color 0.2s';
+    observer.observe(el);
+  });
+</script>
+</body>
+</html>
